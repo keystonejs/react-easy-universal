@@ -1,8 +1,11 @@
 import React from 'react';
-import wireApp from './wire-app.js';
+import universal from '../../client';
+
+import routes from './routes';
+import reducers from './reducers';
 
 // returns a function that must be invoked to trigger render
-const app = wireApp({ React }); // use all the defaults
+const app = universal({ React, routes, reducers });
 
 // The app function will return your store so you can dispatch actions.
 const store = app();

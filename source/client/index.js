@@ -1,32 +1,12 @@
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import checkInputs from '../shared/check-inputs';
+import createClientApp from './create-client-app';
 
-import { Router, browserHistory } from 'react-router';
-import configureStore from '../shared/configure-store';
+// universal({ React, app?, routes, reducers });
+const universal = ({ React, app, routes, reducers }) => {
+  checkInputs({ React, app, routes, reducers });
 
-const createClientApp = ({
-    React, createRoutes, reducers, initialState = {}
-  }) => {
-  const routes = createRoutes({ React });
-
-  const store = configureStore({
-    initialState: window.BOOTSTRAP_CLIENT_STATE ?
-      Object.assign({}, window.BOOTSTRAP_CLIENT_STATE, initialState) :
-      undefined,
-    reducers
-  });
-
-  return () => {
-
-    ReactDOM.render(
-      <Provider store={ store }>
-        <Router routes={ routes } history={ browserHistory }/>
-      </Provider>,
-      document.getElementById('root')
-    );
-
-    return store;
-  };
+  // Client case. Plug in browserHistory, etc...
+  return createClientApp({ React, createRoutes: routes, reducers });
 };
 
-export default createClientApp;
+export default universal;

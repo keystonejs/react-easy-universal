@@ -17,34 +17,16 @@ Proof of concept. Needs testing. Kick the tires.
 
 ## Getting Started
 
-You'll need to create three files:
-
-`wire-app.js`:
-
-```js
-import universal from 'react-easy-universal';
-
-import routes from './routes';
-import reducers from './reducers';
-
-const wireApp = ({
-  React, app
-}) => universal({
-  React, app, routes, reducers
-});
-
-export default wireApp;
-```
-
+You'll need to create two files:
 
 `client.js`:
 
 ```js
 import React from 'react';
-import wireApp from './wire-app.js';
+import universal from 'react-easy-universal/client';
 
 // returns a function that must be invoked to trigger render
-const app = wireApp({ React }); // use all the defaults
+const app = universal({ React }); // use all the defaults
 
 // The app function will return your store so you can dispatch actions.
 const store = app();
@@ -63,14 +45,13 @@ store.dispatch({
 ```js
 import express from 'express';
 import React from 'react';
+import universal from 'react-easy-universal/server';
 
-import wireApp from './wire-app.js';
+app.use('/static', express.static(staticDir));
 
 // Passing in the express app lets it know you want the server
 // version, and it wires up the routes automatically
-const app = wireApp({ React, app: express() });
-
-app.use('/static', express.static(staticDir));
+const app = universal({ React, app: express() });
 
 const port = process.env.APP_PORT || 3000;
 
@@ -90,7 +71,7 @@ app.listen(port, (err) => {
 Use this module instead of depending directly on React Router, and we'll worry about keeping all the version dependencies compatible and in-sync for you.
 
 ```js
-import { Router, Route } from 'react-easy-universal';
+import { Router, Route } from 'react-easy-universal/route-helpers';
 
 import createHome from 'shared/components/home';
 import createTestData from 'shared/components/test-data';
@@ -190,26 +171,17 @@ So, you could keep track of all these dependency versions yourself (and they're 
 
 ## Advanced Configuration (note: unfinished)
 
-Need to customize layouts, the root React Node, the root route, and so on? No problem. Just make your `wire-app.js` factory configurable:
+Need to customize layouts, the root React Node, the root route, and so on? No problem. Just pass in extra configuration options:
 
 ```js
-import universal from 'react-easy-universal';
-
-import routes from './path/to/your/routes';
-import reducers from './path/to/your/reducers';
-
-const wireApp = ({
-  React, app,
+const universal = ({
+  React,
   rootID, // default: 'root'
   rootRoute, // default: '/'
-  renderLayout // Skeleton DOM render template for the server-side. Default: Barebones ES6 template
-}) => universal({
-  React, app,
-  routes, reducers,
-  rootId, rootRoute, renderLayout
+  renderLayout // Skeleton DOM render function for the server-side. Default: Barebones ES6 template
+  routes,
+  reducers
 });
-
-export default wireApp;
 ```
 
 ## Contributing

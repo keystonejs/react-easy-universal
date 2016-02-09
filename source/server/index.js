@@ -1,28 +1,18 @@
-import { match } from 'react-router';
+import createHandler from './create-server-app';
 
-import renderLayout from './render-layout';
-import render from './render';
+import checkInputs from '../shared/check-inputs';
 
-import configureStore from '../shared/configure-store';
+// universal({ React, app?, routes, reducers });
+const universal = ({ React, app, routes, reducers }) => {
+  checkInputs({ React, app, routes, reducers });
 
-export default ({ React, createRoutes, reducers }) => (req, res) => {
-  const routes = createRoutes({ React });
+  if (app) {
+    const requestHandler = createHandler({ React, app, createRoutes: routes, reducers });
 
-  const store = configureStore({
-    initialState: res.locals.context,
-    reducers
-  });
-  const initialState = store.getState();
+    app.use('/', requestHandler);
 
-  match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
-
-    if (error) {
-      res.status(500).send(error.message);
-    } else if (redirectLocation) {
-      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-    } else if (renderProps) {
-      const rootMarkup = render(React)(renderProps, store);
-      res.status(200).send(renderLayout({ rootMarkup, initialState }));
-    }
-  });
+    return app;
+  }
 };
+
+export default universal;

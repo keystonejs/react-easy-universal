@@ -2,7 +2,7 @@ import test from 'tape';
 import express from 'express';
 
 import React from 'react';
-import universal from '../../index';
+import universal from '../../server';
 
 import routes from '../fixtures/routes';
 import reducers from '../fixtures/reducers';

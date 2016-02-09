@@ -1,4 +1,4 @@
-import { Router, Route, connect } from '../../index';
+import { Router, Route, connect } from '../../route-helpers';
 
 // It expects a factory function that it can inject dependencies into.
 export default ({ React }) => {
