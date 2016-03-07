@@ -27,9 +27,12 @@ import React from 'react';
 // Note: There are two versions of the client: bundled and source.
 // If you want to build from source, try `react-easy-universal/client-src`.
 import universal from 'react-easy-universal/client-bundled';
+import routes from './path/to/routes';
+import reducers from './path/to/reducers';
+import reduxMiddleware from './path/to/midleware';
 
 // returns a function that must be invoked to trigger render
-const app = wireApp({ React }); // use all the defaults
+const app = universal({ React, routes, reducers, reduxMiddleware });
 
 // The app function will return your store so you can dispatch actions.
 const store = app();
@@ -50,9 +53,12 @@ import express from 'express';
 import React from 'react';
 import universal from 'react-easy-universal/server';
 
-// Passing in the express app lets it know you want the server
-// version, and it wires up the routes automatically
-const app = wireApp({ React, app: express() });
+import routes from './path/to/routes';
+import reducers from './path/to/reducers';
+import reduxMiddleware from './path/to/midleware';
+
+// returns the express app
+const app = universal({ React, routes, reducers, reduxMiddleware, express });
 
 app.use('/static', express.static(staticDir));
 
