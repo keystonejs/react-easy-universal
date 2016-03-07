@@ -5,7 +5,7 @@ import render from './render';
 
 import configureStore from '../shared/configure-store';
 
-export default ({ React, createRoutes, reducers }) => (req, res) => {
+const createServerApp = ({ React, createRoutes, reducers }) => (req, res) => {
   const routes = createRoutes({ React });
 
   const store = configureStore({
@@ -26,3 +26,5 @@ export default ({ React, createRoutes, reducers }) => (req, res) => {
     }
   });
 };
+
+export default createServerApp;

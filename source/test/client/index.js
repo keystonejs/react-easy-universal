@@ -3,7 +3,7 @@ browserColor();
 import test from 'tape';
 
 import React from 'react';
-import universal from '../../client';
+import universal from '../../../client-bundled.js';
 
 import routes from '../fixtures/routes';
 import reducers from '../fixtures/reducers';

@@ -1,3 +1,3 @@
-var client = require('./dist/client');
+var client = require('./dist/client').default;
 
 module.exports = client;
