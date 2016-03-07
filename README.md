@@ -58,7 +58,7 @@ import reducers from './path/to/reducers';
 import reduxMiddleware from './path/to/midleware';
 
 // returns the express app
-const app = universal({ React, routes, reducers, reduxMiddleware, express });
+const app = universal({ React, routes, reducers, reduxMiddleware, app: express() });
 
 app.use('/static', express.static(staticDir));
 
