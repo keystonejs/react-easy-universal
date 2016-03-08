@@ -84,7 +84,7 @@ save on client download time.
 Use this module instead of depending directly on React Router, and we'll worry about keeping all the version dependencies compatible and in-sync for you.
 
 ```js
-import { Router, Route } from 'react-easy-universal/route-helpers';
+import { Router, Route } from 'react-router';
 
 import createHome from 'shared/components/home';
 import createTestData from 'shared/components/test-data';
