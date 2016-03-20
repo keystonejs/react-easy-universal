@@ -1,4 +1,4 @@
-const WAIT = 10000;
+const WAIT = 3000;
 const NODE_PORT = process.env.NODE_PORT || 3000;
 
 module.exports = {
@@ -7,7 +7,7 @@ module.exports = {
       .url(`http://localhost:${NODE_PORT}/`)
       .waitForElementVisible('body', WAIT)
       .pause(WAIT)
-      .assert.containsText('body', 'Client render')
+      .expect.element('body').text.to.contain('Client render').before(10000);
       .end();
   }
 };
