@@ -1,4 +1,5 @@
-import { Router, Route, connect } from '../../route-helpers';
+import { Router, Route } from 'react-router';
+import { connect } from 'react-redux';
 
 // It expects a factory function that it can inject dependencies into.
 export default ({ React }) => {

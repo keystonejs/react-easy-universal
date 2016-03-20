@@ -6,8 +6,8 @@ module.exports = {
     browser
       .url(`http://localhost:${NODE_PORT}/`)
       .waitForElementVisible('body', WAIT)
-      .pause(800)
-      .assert.containsText('body', 'Client render')
+      .pause(WAIT)
+      .expect.element('body').text.to.contain('Client render').before(10000)
       .end();
   }
 };
