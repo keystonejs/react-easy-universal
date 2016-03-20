@@ -7,7 +7,7 @@ module.exports = {
       .url(`http://localhost:${NODE_PORT}/`)
       .waitForElementVisible('body', WAIT)
       .pause(WAIT)
-      .expect.element('body').text.to.contain('Client render').before(10000);
+      .expect.element('body').text.to.contain('Client render').before(10000)
       .end();
   }
 };
