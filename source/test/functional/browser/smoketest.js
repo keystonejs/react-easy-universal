@@ -5,7 +5,8 @@ module.exports = {
   'Smoketest' (browser) {
     browser
       .url(`http://localhost:${NODE_PORT}/`)
-      .waitForElementVisible('body', WAIT)
+      .waitForElementVisible('body', WAIT);
+    browser
       .expect.element('body').text.to.contain('Client render').before(WAIT);
     browser
       .end();
