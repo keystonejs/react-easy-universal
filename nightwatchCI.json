@@ -10,8 +10,8 @@
     "start_process" : false,
     "server_path" : "",
     "log_path" : "",
-    "host" : "127.0.0.1",
-    "port" : 4444,
+    "host" : "ondemand.saucelabs.com",
+    "port" : 80,
     "cli_args" : {
       "webdriver.chrome.driver" : "",
       "webdriver.ie.driver" : "",
@@ -21,22 +21,7 @@
 
   "test_settings" : {
     "default" : {
-      "launch_url" : "http://localhost",
-      "selenium_host": "localhost",
-      "selenium_port": 4444,
-      "silent": true,
-      "screenshots" : {
-        "enabled" : false,
-        "path" : ""
-      },
-      "desiredCapabilities": {
-        "browserName": "chrome",
-        "javascriptEnabled": true,
-        "acceptSslCerts": true
-      }
-    },
-    "integration" : {
-      "launch_url" : "http://localhost",
+      "launch_url" : "http://localhost:3000/",
       "selenium_host": "ondemand.saucelabs.com",
       "selenium_port": 80,
       "username": "${SAUCE_USERNAME}",
