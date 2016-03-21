@@ -9,3 +9,4 @@ module.exports = {
     browser.expect.element('body').text.to.contain('Client render').before(WAIT);
     browser.end();
       }
+};
