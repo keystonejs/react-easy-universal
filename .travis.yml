@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+  - "4"
+  - "5"
+env:
+  - NIGHTWATCH_CONFIG=nightwatchCI.json
+addons:
+  sauce_connect: true
+before_install:
+  - export REPORT_DIR=$HOME/node_modules/.bin/reports"
+  - export LOG_DIR="$HOME/node_modules/.bin/logs"
+install:
+  - npm install -g npm@3
+before_script:
+  - ./node_modules/.bin/eslint --debug . --format tap | ./node_modules/.bin/tap-xunit > REPORT_DIR/lint.xml && test ${PIPESTATUS[0]} -eq 0
+  - ./node_modules/.bin/babel-node source/test | ./node_modules/.bin/tap-xunit > LOG_DIR/test.xml && test ${PIPESTATUS[0]} -eq 0
+  - npm outdated --depth=0
+script:
+  - npm test
+  - npm run test:e2e -s
+branches:
+  only:
+    - master
