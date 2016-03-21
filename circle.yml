@@ -22,6 +22,6 @@ test:
     - npm outdated --depth=0
     - npm test
     # Run selenium tests
-    - REPORT_DIR=${CIRCLE_TEST_REPORTS} LOG_DIR=${CIRCLE_ARTIFACTS} npm run test:e2e -s
+    - NIGHTWATCH_CONFIG=nightwatchCI.json REPORT_DIR=${CIRCLE_TEST_REPORTS} LOG_DIR=${CIRCLE_ARTIFACTS} npm run test:e2e -s
   post:
     - killall --wait sc  # wait for Sauce Connect to close the tunnel
