@@ -11,17 +11,18 @@ dependencies:
 
 test:
   override:
-    # Do Testing with Sauce Labs
-    - cd sc-*-linux && ./bin/sc --user $SAUCE_USERNAME --api-key $SAUCE_ACCESS_KEY --readyfile ~/sauce_is_ready:
-        background: true
-    # Wait for tunnel to be ready
-    - while [ ! -e ~/sauce_is_ready ]; do sleep 1; done
-
+    # Run lint and unit tests
     - ./node_modules/.bin/eslint --debug . --format tap | ./node_modules/.bin/tap-xunit > ${CIRCLE_TEST_REPORTS}/lint.xml && test ${PIPESTATUS[0]} -eq 0
     - ./node_modules/.bin/babel-node source/test | ./node_modules/.bin/tap-xunit > ${CIRCLE_TEST_REPORTS}/test.xml && test ${PIPESTATUS[0]} -eq 0
     - npm outdated --depth=0
     - npm test
+    # Connect & run Selenium E2E testing with SauceLabs
+    - cd sc-*-linux && ./bin/sc --readyfile ~/sauce_is_ready -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY -i circle-${CIRCLE_BUILD_NUM}.${CIRCLE_NODE_INDEX}:
+       background: true
+    # Wait for tunnel to be ready
+    - while [ ! -e ~/sauce_is_ready ]; do sleep 1; done
     # Run selenium tests
-    - REPORT_DIR=${CIRCLE_TEST_REPORTS} LOG_DIR=${CIRCLE_ARTIFACTS} npm run test:e2e -s
+    - REPORT_DIR=${CIRCLE_TEST_REPORTS} LOG_DIR=${CIRCLE_ARTIFACTS} TUNNEL_IDENTIFIER=circle-${CIRCLE_BUILD_NUM}.${CIRCLE_NODE_INDEX} NIGHTWATCH_CONFIG=nightwatchCI.json npm run test:e2e -s
   post:
-    - killall --wait sc  # wait for Sauce Connect to close the tunnel
+    # Wait for Sauce Connect to close the tunnel
+    - killall --wait sc
