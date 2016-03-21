@@ -14,20 +14,38 @@
     "port" : 4444,
     "cli_args" : {
       "webdriver.chrome.driver" : "",
-      "webdriver.ie.driver" : ""
+      "webdriver.ie.driver" : "",
+      "webdriver.firefox.profile" : "webdriver"
     }
   },
 
   "test_settings" : {
     "default" : {
       "launch_url" : "http://localhost",
-      "selenium_port"  : 4444,
-      "selenium_host"  : "localhost",
       "silent": true,
       "screenshots" : {
         "enabled" : false,
         "path" : ""
       },
+      "selenium_host": "localhost",
+      "selenium_port": 4444,
+      "desiredCapabilities": {
+        "browserName": "chrome",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true
+      }
+    },
+    "integration" : {
+      "launch_url" : "http://localhost",
+      "silent": true,
+      "screenshots" : {
+        "enabled" : false,
+        "path" : ""
+      },
+      "selenium_host": "ondemand.saucelabs.com",
+      "selenium_port": 80,
+      "username": "${SAUCE_USERNAME}",
+      "access_key": "${SAUCE_ACCESS_KEY}",
       "desiredCapabilities": {
         "browserName": "chrome",
         "javascriptEnabled": true,
@@ -40,6 +58,7 @@
         "browserName": "chrome",
         "javascriptEnabled": true,
         "acceptSslCerts": true
+
       }
     }
   }
