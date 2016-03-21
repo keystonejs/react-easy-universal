@@ -43,7 +43,6 @@
         "browserName": "chrome",
         "javascriptEnabled": true,
         "acceptSslCerts": true
-
       }
     }
   }
