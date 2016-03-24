@@ -21,7 +21,7 @@
 
   "test_settings": {
     "default": {
-      "launch_url": "http://localhost",
+      "launch_url": "http://localhost:${NODE_PORT}",
       "selenium_host": "localhost",
       "selenium_port": 4444,
       "silent": true,
