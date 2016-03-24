@@ -22,7 +22,7 @@ test:
     # Wait for tunnel to be ready
     - while [ ! -e ~/sauce_is_ready ]; do sleep 1; done
     # Run selenium tests
-    - REPORT_DIR=${CIRCLE_TEST_REPORTS} LOG_DIR=${CIRCLE_ARTIFACTS} TUNNEL_IDENTIFIER=circle-${CIRCLE_BUILD_NUM}.${CIRCLE_NODE_INDEX} NIGHTWATCH_CONFIG=nightwatchCI.json npm run test:e2e -s
+    - REPORT_DIR=${CIRCLE_TEST_REPORTS} LOG_DIR=${CIRCLE_ARTIFACTS} TUNNEL_IDENTIFIER=circle-${CIRCLE_BUILD_NUM}.${CIRCLE_NODE_INDEX} NIGHTWATCH_ENV=integration npm run test:e2e -s
   post:
     # Wait for Sauce Connect to close the tunnel
     - killall --wait sc
