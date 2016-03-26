@@ -36,7 +36,7 @@
       }
     },
     "integration": {
-      "launch_url": "http://localhost",
+      "launch_url": "http://localhost:${NODE_PORT}",
       "selenium_host": "ondemand.saucelabs.com",
       "selenium_port": 80,
       "username": "${SAUCE_USERNAME}",
