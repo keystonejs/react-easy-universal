@@ -23,7 +23,7 @@ script:
   # Wait for tunnel to be ready
   - while [ ! -e ~/sauce_is_ready ]; do sleep 1; done
   # Run Selenium tests
-  - REPORT_DIR=${HOME} LOG_DIR=${HOME} TUNNEL_IDENTIFIER=travis-${TRAVIS_JOB_NUMBER} NIGHTWATCH_ENV=integration npm run test:e2e -s
+  - REPORT_DIR=${HOME} LOG_DIR=${HOME} TUNNEL_IDENTIFIER=travis-${TRAVIS_JOB_NUMBER} NIGHTWATCH_ENV=travis npm run test:e2e -s
 after_script:
   # Wait for Sauce Connect to close the tunnel
   - killall --wait sc
