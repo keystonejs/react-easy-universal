@@ -31,11 +31,8 @@
       "log_dir": "${LOG_DIR}",
       "report_dir": "${REPORT_DIR}",
       "silent": true,
-      "screenshots" : {
-        "enabled" : false
-      },
       "desiredCapabilities": {
-        "browserName": "chrome",
+        "browserName": "firefox",
         "javascriptEnabled": true,
         "acceptSslCerts": true
       }
@@ -49,19 +46,8 @@
       "log_dir": "${LOG_DIR}",
       "report_dir": "${REPORT_DIR}",
       "silent": true,
-      "screenshots" : {
-        "enabled" : false
-      },
       "desiredCapabilities": {
         "tunnelIdentifier": "${TUNNEL_IDENTIFIER}",
-        "browserName": "chrome",
-        "javascriptEnabled": true,
-        "acceptSslCerts": true
-      }
-    },
-
-    "chrome": {
-      "desiredCapabilities": {
         "browserName": "chrome",
         "javascriptEnabled": true,
         "acceptSslCerts": true
