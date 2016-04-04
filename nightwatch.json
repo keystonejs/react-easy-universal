@@ -1,22 +1,9 @@
 {
   "src_folders": ["source/test/functional/browser"],
   "output_folder": "./reports/test-e2e",
-  "custom_commands_path": "",
-  "custom_assertions_path": "",
-  "page_objects_path": "",
-  "globals_path": "",
 
   "selenium": {
-    "start_process": false,
-    "server_path": "",
-    "log_path": "",
-    "host": "127.0.0.1",
-    "port": 4444,
-    "cli_args": {
-      "webdriver.chrome.driver": "",
-      "webdriver.ie.driver": "",
-      "webdriver.firefox.profile": "webdriver"
-    }
+    "start_process": false
   },
 
   "test_settings": {
@@ -25,9 +12,11 @@
       "selenium_host": "localhost",
       "selenium_port": 4444,
       "silent": true,
-      "screenshots": {
-        "enabled": false,
-        "path": ""
+      "screenshots" : {
+        "enabled" : true,
+        "on_failure" : true,
+        "on_error" : false,
+        "path" : "./reports/test-e2e"
       },
       "desiredCapabilities": {
         "browserName": "chrome",
@@ -35,7 +24,26 @@
         "acceptSslCerts": true
       }
     },
-    "integration": {
+    "circle": {
+      "launch_url": "http://localhost:${NODE_PORT}",
+      "selenium_host": "localhost",
+      "selenium_port": 4444,
+      "log_dir": "${LOG_DIR}",
+      "report_dir": "${REPORT_DIR}",
+      "silent": true,
+      "screenshots" : {
+        "enabled" : true,
+        "on_failure" : true,
+        "on_error" : false,
+        "path" : "${REPORT_DIR}"
+      },
+      "desiredCapabilities": {
+        "browserName": "chrome",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true
+      }
+    },
+    "travis": {
       "launch_url": "http://localhost:${NODE_PORT}",
       "selenium_host": "ondemand.saucelabs.com",
       "selenium_port": 80,
@@ -44,9 +52,11 @@
       "log_dir": "${LOG_DIR}",
       "report_dir": "${REPORT_DIR}",
       "silent": true,
-      "screenshots": {
-        "enabled": false,
-        "path": ""
+      "screenshots" : {
+        "enabled" : true,
+        "on_failure" : true,
+        "on_error" : false,
+        "path" : "${REPORT_DIR}"
       },
       "desiredCapabilities": {
         "tunnelIdentifier": "${TUNNEL_IDENTIFIER}",
