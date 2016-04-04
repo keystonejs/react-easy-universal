@@ -4,6 +4,8 @@ machine:
 
 dependencies:
   pre:
+    - sudo apt-get update
+    - sudo apt-get install --only-upgrade google-chrome-stable
     - npm install -g npm@3
   post:
     - wget https://saucelabs.com/downloads/sc-latest-linux.tar.gz
