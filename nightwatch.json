@@ -32,10 +32,7 @@
       "report_dir": "${REPORT_DIR}",
       "silent": true,
       "screenshots" : {
-        "enabled" : true,
-        "on_failure" : true,
-        "on_error" : false,
-        "path" : "${REPORT_DIR}"
+        "enabled" : false
       },
       "desiredCapabilities": {
         "browserName": "chrome",
@@ -53,10 +50,7 @@
       "report_dir": "${REPORT_DIR}",
       "silent": true,
       "screenshots" : {
-        "enabled" : true,
-        "on_failure" : true,
-        "on_error" : false,
-        "path" : "${REPORT_DIR}"
+        "enabled" : false
       },
       "desiredCapabilities": {
         "tunnelIdentifier": "${TUNNEL_IDENTIFIER}",
