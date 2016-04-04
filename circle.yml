@@ -7,23 +7,22 @@ dependencies:
     - sudo apt-get update
     - npm install -g npm@3
   post:
+    ## SauceLabs: Download Sauce Connect client
     #- wget https://saucelabs.com/downloads/sc-latest-linux.tar.gz
     #- tar -xzf sc-latest-linux.tar.gz
 
 test:
   override:
-    # Run lint and unit tests
     - ./node_modules/.bin/eslint --debug . --format tap | ./node_modules/.bin/tap-xunit > ${CIRCLE_TEST_REPORTS}/lint.xml && test ${PIPESTATUS[0]} -eq 0
     - ./node_modules/.bin/babel-node source/test | ./node_modules/.bin/tap-xunit > ${CIRCLE_TEST_REPORTS}/test.xml && test ${PIPESTATUS[0]} -eq 0
     - npm outdated --depth=0
     - npm test
-    ## Connect & run Selenium E2E testing with SauceLabs
+    ## SauceLabs: Run client and connect to server
     #- cd sc-*-linux && ./bin/sc --readyfile ~/sauce_is_ready -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY -i circle-${CIRCLE_BUILD_NUM}.${CIRCLE_NODE_INDEX}:
     #   background: true
-    ## Wait for tunnel to be ready
+    ## SauceLabs: Wait for tunnel to be ready
     #- while [ ! -e ~/sauce_is_ready ]; do sleep 1; done
-    # Run selenium tests
     - REPORT_DIR=${CIRCLE_TEST_REPORTS} LOG_DIR=${CIRCLE_ARTIFACTS} TUNNEL_IDENTIFIER=circle-${CIRCLE_BUILD_NUM}.${CIRCLE_NODE_INDEX} NIGHTWATCH_ENV=circle npm run test:e2e -s
   post:
-    ## Wait for Sauce Connect to close the tunnel
+    ## SauceLabs: Wait for Sauce Connect to close the tunnel
     #- killall --wait sc
