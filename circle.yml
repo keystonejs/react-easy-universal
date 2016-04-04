@@ -2,10 +2,14 @@ machine:
   node:
     version: v5.5.0
 
-
 dependencies:
   pre:
+    - sudo apt-get update
     - npm install -g npm@3
+  post:
+    ## SauceLabs: Download Sauce Connect client
+    #- wget https://saucelabs.com/downloads/sc-latest-linux.tar.gz
+    #- tar -xzf sc-latest-linux.tar.gz
 
 test:
   override:
@@ -13,4 +17,12 @@ test:
     - ./node_modules/.bin/babel-node source/test | ./node_modules/.bin/tap-xunit > ${CIRCLE_TEST_REPORTS}/test.xml && test ${PIPESTATUS[0]} -eq 0
     - npm outdated --depth=0
     - npm test
-    - REPORT_DIR=${CIRCLE_TEST_REPORTS} LOG_DIR=${CIRCLE_ARTIFACTS} npm run test:e2e -s
+    ## SauceLabs: Run client and connect to server
+    #- cd sc-*-linux && ./bin/sc --readyfile ~/sauce_is_ready -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY -i circle-${CIRCLE_BUILD_NUM}.${CIRCLE_NODE_INDEX}:
+    #   background: true
+    ## SauceLabs: Wait for tunnel to be ready
+    #- while [ ! -e ~/sauce_is_ready ]; do sleep 1; done
+    - REPORT_DIR=${CIRCLE_TEST_REPORTS} LOG_DIR=${CIRCLE_ARTIFACTS} TUNNEL_IDENTIFIER=circle-${CIRCLE_BUILD_NUM}.${CIRCLE_NODE_INDEX} NIGHTWATCH_ENV=circle npm run test:e2e -s
+  post:
+    ## SauceLabs: Wait for Sauce Connect to close the tunnel
+    #- killall --wait sc

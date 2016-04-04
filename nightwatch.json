@@ -1,32 +1,22 @@
 {
-  "src_folders" : ["source/test/functional/browser"],
-  "output_folder" : "./reports/test-e2e",
-  "custom_commands_path" : "",
-  "custom_assertions_path" : "",
-  "page_objects_path" : "",
-  "globals_path" : "",
+  "src_folders": ["source/test/functional/browser"],
+  "output_folder": "./reports/test-e2e",
 
-  "selenium" : {
-    "start_process" : false,
-    "server_path" : "",
-    "log_path" : "",
-    "host" : "127.0.0.1",
-    "port" : 4444,
-    "cli_args" : {
-      "webdriver.chrome.driver" : "",
-      "webdriver.ie.driver" : ""
-    }
+  "selenium": {
+    "start_process": false
   },
 
-  "test_settings" : {
-    "default" : {
-      "launch_url" : "http://localhost",
-      "selenium_port"  : 4444,
-      "selenium_host"  : "localhost",
+  "test_settings": {
+    "default": {
+      "launch_url": "http://localhost:${NODE_PORT}",
+      "selenium_host": "localhost",
+      "selenium_port": 4444,
       "silent": true,
       "screenshots" : {
-        "enabled" : false,
-        "path" : ""
+        "enabled" : true,
+        "on_failure" : true,
+        "on_error" : false,
+        "path" : "./reports/test-e2e"
       },
       "desiredCapabilities": {
         "browserName": "chrome",
@@ -34,9 +24,30 @@
         "acceptSslCerts": true
       }
     },
-
-    "chrome" : {
+    "circle": {
+      "launch_url": "http://localhost:${NODE_PORT}",
+      "selenium_host": "localhost",
+      "selenium_port": 4444,
+      "log_dir": "${LOG_DIR}",
+      "report_dir": "${REPORT_DIR}",
+      "silent": true,
       "desiredCapabilities": {
+        "browserName": "firefox",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true
+      }
+    },
+    "travis": {
+      "launch_url": "http://localhost:${NODE_PORT}",
+      "selenium_host": "ondemand.saucelabs.com",
+      "selenium_port": 80,
+      "username": "${SAUCE_USERNAME}",
+      "access_key": "${SAUCE_ACCESS_KEY}",
+      "log_dir": "${LOG_DIR}",
+      "report_dir": "${REPORT_DIR}",
+      "silent": true,
+      "desiredCapabilities": {
+        "tunnelIdentifier": "${TUNNEL_IDENTIFIER}",
         "browserName": "chrome",
         "javascriptEnabled": true,
         "acceptSslCerts": true

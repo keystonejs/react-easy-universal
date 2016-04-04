@@ -1,0 +1,31 @@
+language: node_js
+node_js:
+  - "5"
+
+before_install:
+  - sudo apt-get update -qq
+
+install:
+  # SauceLabs: Download Sauce Connect client
+  - wget https://saucelabs.com/downloads/sc-latest-linux.tar.gz
+  - tar -xzf sc-latest-linux.tar.gz
+
+before_script:
+  - npm install
+
+script:
+  - ./node_modules/.bin/eslint --debug . --format tap | ./node_modules/.bin/tap-xunit > ${HOME}/lint.xml && test ${PIPESTATUS[0]} -eq 0
+  - ./node_modules/.bin/babel-node source/test | ./node_modules/.bin/tap-xunit > ${HOME}/test.xml && test ${PIPESTATUS[0]} -eq 0
+  - npm outdated --depth=0
+  - npm test
+  # SauceLabs: Run client and connect to server
+  - cd sc-*-linux && ./bin/sc --readyfile ~/sauce_is_ready -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY -i travis-${TRAVIS_JOB_NUMBER} &
+  # SauceLabs: Wait for tunnel to be ready
+  - while [ ! -e ~/sauce_is_ready ]; do sleep 1; done
+  - REPORT_DIR=${HOME} LOG_DIR=${HOME} TUNNEL_IDENTIFIER=travis-${TRAVIS_JOB_NUMBER} NIGHTWATCH_ENV=travis npm run test:e2e -s
+after_script:
+  # SauceLabs: Wait for Sauce Connect to close the tunnel
+  - killall --wait sc
+cache:
+  directories:
+  - node_modules
